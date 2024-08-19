@@ -1,27 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { mockProducts } from '../data/mockProducts';
+import CartContext from '../context/CartContext';
+import ItemDetail from './ItemDetail';
 
 const ItemDetailContainer = () => {
-  const { id } = useParams(); // Obtiene el id del producto desde la URL
-  const [product, setProduct] = useState(null); // Estado para el producto
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     if (id) {
-      const productId = parseInt(id, 10); // Convierte el id a número entero
+      const productId = parseInt(id, 10);
       const selectedProduct = mockProducts.find((prod) => prod.id === productId);
-      setProduct(selectedProduct || null); // Establece el producto o null si no se encuentra
+      setProduct(selectedProduct || null);
     }
-  }, [id]); 
+  }, [id]);
+
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product);
+    }
+  };
 
   return (
     <div>
       {product ? (
         <div>
-          <h1>{product.title}</h1>
-          <img src={product.image} alt={product.title} />
-          <p>{product.description}</p>
-          <p>${product.price}</p>
+          <ItemDetail product={product} />
+          <button onClick={handleAddToCart}>Agregar al Carrito</button>
         </div>
       ) : (
         <p>Producto no encontrado</p>
@@ -31,3 +38,4 @@ const ItemDetailContainer = () => {
 };
 
 export default ItemDetailContainer;
+
