@@ -1,8 +1,9 @@
+// src/components/NavBar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CartWidget from './CartWidget';
 
-const Navbar = () => {
+const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -21,6 +22,9 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/category/juguetes">Juguetes</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/cart">Carrito</Link>
+            </li>
           </ul>
         </div>
         <CartWidget />
@@ -29,4 +33,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;
